@@ -21,22 +21,33 @@ document.addEventListener("DOMContentLoaded", () => {
     function displayCharacters(characters) {
         var itemList = document.getElementById("my-list");
         var template = document.getElementById("list-template");
+
         itemList.innerHTML = '';
   
         characters.forEach((character, index) => {
             var total = index + 1;
             var clone = template.content.cloneNode(true);
-          
+
   
             clone.querySelector("[data-id='number']").textContent = `${total}`;
             clone.querySelector("[data-id='title']").textContent = character.name;
             clone.querySelector("[data-id='content']").textContent = `Status: ${character.status}`;
             clone.querySelector("[data-id='specie']").textContent = `Species: ${character.species}`;
             clone.querySelector("[data-id='image']").src = character.image;
+
+            // Agregar evento de clic a la imagen para mostrar el modal con la imagen correspondiente
+            clone.querySelector("[data-id='image']").addEventListener("click", function() {
+                var modalImage = document.querySelector("#exampleModal .modal-body img");
+                modalImage.src = character.image;
+                var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+                modal.show();
+            });
   
             itemList.appendChild(clone);
+            
         });
     }
+    
 
   
     // Recargar pagina
